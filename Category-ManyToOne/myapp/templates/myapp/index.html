@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'base/base.html' %}
+{% block content %}
+<!--<h1>Hello from myapp index view!</h1>-->
+<div class="card-columns">
+    {% for flower in flowers %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{flower.title}}</h5>
+            <p class="card-text">{{ flower.description | truncatechars:100}}</p>
+            <a href="#" class="card-link">{{ flower.category}}</a>
+            <a href="/admin/myapp/flower/{{flower.id}}/change/" class="card-link">Edit</a>
+            <a href="/admin/myapp/flower/{{flower.id}}/delete/" class="card-link">Delete</a>
+
+            <hr>
+            All Flowers in the <strong> {{ flower.category}}</strong> category: <br>
+            {% for c_flower in flower.category.flower_set.all %}
+            <a href="#" class="card-link">{{ c_flower }}</a><br>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+</body>
+</html>

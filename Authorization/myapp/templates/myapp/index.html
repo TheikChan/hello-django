@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'base/base.html' %}
+{% block content %}
+<!--<h1>Hello from myapp index view!</h1>-->
+<div class="card-columns">
+    {% for flower in flowers %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{flower.title}}</h5>
+            <p class="card-text">{{ flower.description | truncatechars:100}}</p>
+            <!--            <a href="/admin/myapp/flower/{{flower.id}}/change/" class="card-link">Edit</a>-->\
+            {% if perms.myapp.change_flower %}
+            <a href="{% url 'edit' pk=flower.pk %}}" class="card-link">Edit</a>
+            {% endif %}
+            <!--            <a href="/admin/myapp/flower/{{flower.id}}/delete/" class="card-link">Delete</a>-->
+            {% if perms.myapp.delete_flower %}
+            <a href="{% url 'delete' pk=flower.pk %}" class="card-link">Delete</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+</body>
+</html>
